@@ -1,0 +1,109 @@
+<div class="min-h-screen flex bg-[#070b14] text-slate-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-900/80 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between hidden md:flex shrink-0 z-30">
+    <div>
+      <!-- Brand Header -->
+      <div class="h-16 flex items-center px-6 border-b border-slate-800/80 gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-heading font-extrabold text-base tracking-wide bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
+            SPORTS PARTNERS
+          </h1>
+          <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Hierarchy Engine</p>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="px-3 py-6 space-y-1">
+        <a routerLink="/dashboard" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a routerLink="/partners" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span>Partners</span>
+        </a>
+
+        <a routerLink="/hierarchy" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 11.5V14m0 0v2.5m0-2.5h10m-10 0H4m10 0V14m0 0v2.5m0-2.5h3m-3-9.5V7m0 0V4.5m0 2.5h-5m5 0h3m-13 0V7m0 0V4.5m0 2.5H4" />
+          </svg>
+          <span>Visual Hierarchy</span>
+        </a>
+
+        <a routerLink="/partnership" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <span>Partnership Config</span>
+        </a>
+
+        <a routerLink="/transactions" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          <span>Transactions & Calc</span>
+        </a>
+
+        <a routerLink="/reports" routerLinkActive="bg-indigo-600/20 text-indigo-400 border-indigo-500/50" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>Reports & Analytics</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User / System Badge -->
+    <div class="p-4 m-3 rounded-2xl bg-gradient-to-br from-indigo-950/60 to-purple-950/60 border border-indigo-500/20">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500 flex items-center justify-center font-bold text-slate-950 text-xs shadow-md">
+          ADM
+        </div>
+        <div class="overflow-hidden">
+          <p class="text-xs font-semibold text-slate-200 truncate">System Super Admin</p>
+          <p class="text-[10px] text-emerald-400 flex items-center gap-1 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Network Active
+          </p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- Top Header -->
+    <header class="h-16 bg-slate-900/60 backdrop-blur-xl border-b border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center gap-4">
+        <!-- Mobile menu toggle button placeholder -->
+        <span class="text-xs font-medium px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hidden sm:inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+          Multi-Level Cascading Engine
+        </span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300">
+          <span class="text-slate-400">Sports Enabled:</span>
+          <span class="font-bold text-amber-400">Cricket</span> • 
+          <span class="font-bold text-cyan-400">Tennis</span> • 
+          <span class="font-bold text-emerald-400">Football</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

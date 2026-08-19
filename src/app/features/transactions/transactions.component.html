@@ -1,0 +1,200 @@
+<div class="space-y-8">
+  <!-- Title -->
+  <div>
+    <h2 class="text-2xl font-bold font-heading text-white">Transactions & Calculator</h2>
+    <p class="text-sm text-slate-400">Simulate revenue sharing payouts across uplines and post verified transactions</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Left 1 Col: Calculator Input Form -->
+    <div class="glass-panel p-6 space-y-5 h-fit">
+      <h3 class="text-lg font-bold font-heading text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+        Revenue Simulator
+      </h3>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Generating Partner *</label>
+          <select [(ngModel)]="selectedPartnerId" (change)="calculate()" class="form-input">
+            <option *for="let p of partners" [value]="p._id">
+              {{ p.name }} (L{{ p.level }} - {{ p.partnerId }})
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Sport *</label>
+          <select [(ngModel)]="selectedSport" (change)="calculate()" class="form-input uppercase">
+            <option *for="let s of sports" [value]="s.code">{{ s.name }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Generated Revenue Amount (₹) *</label>
+          <input type="number" [(ngModel)]="amount" (input)="calculate()" placeholder="10000" class="form-input text-sm font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Transaction Note (Optional)</label>
+          <input type="text" [(ngModel)]="note" placeholder="e.g. IPL Match Day 4 Booking" class="form-input" />
+        </div>
+      </div>
+
+      <button (click)="processTransaction()" [disabled]="submitting" class="btn-primary w-full justify-center">
+        <span *ngIf="submitting">Processing Transaction...</span>
+        <span *ngIf="!submitting">Execute & Save Transaction</span>
+      </button>
+    </div>
+
+    <!-- Right 2 Cols: Step-by-Step Payout Breakdown Preview -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Live Calculation Breakdown Card -->
+      <div class="glass-panel p-6 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h3 class="text-lg font-bold font-heading text-white">Live Upline Distribution Preview</h3>
+            <p class="text-xs text-slate-400">Shows exact mathematical money distribution across all uplines</p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">
+            Total 100% Allocated
+          </span>
+        </div>
+
+        <div *ngIf="calculating" class="flex justify-center py-8">
+          <div class="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+
+        <div *ngIf="!calculating && previewResult" class="space-y-6">
+          <!-- Step-by-step Payout Cards -->
+          <div class="space-y-3">
+            <div *ngFor="let item of previewResult.breakdown; let idx = index" class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between hover:border-slate-700 transition-all">
+              <div class="flex items-center gap-3">
+                <span [ngClass]="{
+                  'badge-l1': item.level === 1,
+                  'badge-l2': item.level === 2,
+                  'badge-l3': item.level === 3,
+                  'badge-l4': item.level === 4,
+                  'badge-l5': item.level === 5
+                }" class="px-2.5 py-1 rounded-md text-xs font-bold">
+                  LEVEL {{ item.level }}
+                </span>
+                <div>
+                  <h4 class="font-bold text-white text-sm">{{ item.partnerName }}</h4>
+                  <p class="text-[11px] font-mono text-slate-400">{{ item.formula }}</p>
+                </div>
+              </div>
+
+              <div class="text-right">
+                <p class="text-xs text-slate-400 font-semibold">{{ item.percentage }}% Retained Share</p>
+                <p class="text-lg font-extrabold text-emerald-400">₹{{ item.amount | number }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Summary -->
+          <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30 flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-300">Total Business Revenue Generated:</span>
+            <span class="text-xl font-black text-white">₹{{ previewResult.amount | number }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction Log Table -->
+      <div class="glass-panel p-6 space-y-4">
+        <h3 class="text-lg font-bold font-heading text-white">Recorded Transaction Ledger</h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-3">
+                <th class="pb-3 px-4">TX ID</th>
+                <th class="pb-3 px-4">Partner</th>
+                <th class="pb-3 px-4">Sport</th>
+                <th class="pb-3 px-4">Total Amount</th>
+                <th class="pb-3 px-4 text-right">Details</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-xs">
+              <tr *ngFor="let tx of transactions" class="hover:bg-slate-800/30 transition-colors">
+                <td class="py-3 px-4 font-mono font-bold text-indigo-400">{{ tx.transactionId }}</td>
+                <td class="py-3 px-4 font-medium text-white">
+                  {{ tx.partnerName }} <span class="text-[10px] text-slate-400">(L{{ tx.partnerLevel }})</span>
+                </td>
+                <td class="py-3 px-4">
+                  <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold" [ngClass]="{
+                    'bg-amber-500/10 text-amber-400 border border-amber-500/30': tx.sport === 'cricket',
+                    'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30': tx.sport === 'tennis',
+                    'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30': tx.sport === 'football'
+                  }">
+                    {{ tx.sportName || tx.sport }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 font-extrabold text-emerald-400">₹{{ tx.amount | number }}</td>
+                <td class="py-3 px-4 text-right">
+                  <button (click)="openTxModal(tx)" class="btn-secondary text-[11px] px-2.5 py-1">
+                    Audit Receipt
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction Audit Receipt Modal -->
+  <div *ngIf="showTxModal && selectedTxDetail" class="modal-overlay">
+    <div class="glass-panel w-full max-w-lg p-6 space-y-6 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div>
+          <span class="text-xs font-mono font-bold text-indigo-400">{{ selectedTxDetail.transactionId }}</span>
+          <h3 class="text-lg font-bold font-heading text-white">Transaction Audit Receipt</h3>
+        </div>
+        <button (click)="closeTxModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="grid grid-cols-2 gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+          <div>
+            <span class="text-slate-400 block text-[10px]">Generated By</span>
+            <span class="font-bold text-white">{{ selectedTxDetail.partnerName }} (L{{ selectedTxDetail.partnerLevel }})</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[10px]">Sport & Total Amount</span>
+            <span class="font-bold text-emerald-400 uppercase">{{ selectedTxDetail.sport }} • ₹{{ selectedTxDetail.amount | number }}</span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Commission Breakdown</h4>
+          <div *ngFor="let item of selectedTxDetail.breakdown" class="p-3 rounded-lg bg-slate-800/60 border border-slate-700/50 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span [ngClass]="{
+                'badge-l1': item.level === 1,
+                'badge-l2': item.level === 2,
+                'badge-l3': item.level === 3,
+                'badge-l4': item.level === 4,
+                'badge-l5': item.level === 5
+              }" class="px-2 py-0.5 rounded text-[10px] font-bold">
+                L{{ item.level }}
+              </span>
+              <div>
+                <p class="font-semibold text-white">{{ item.partnerName }}</p>
+                <p class="text-[10px] text-slate-400 font-mono">{{ item.formula }}</p>
+              </div>
+            </div>
+            <span class="font-extrabold text-emerald-400">₹{{ item.amount | number }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-4 border-t border-slate-800">
+        <button (click)="closeTxModal()" class="btn-secondary">Close Audit</button>
+      </div>
+    </div>
+  </div>
+</div>
