@@ -12,7 +12,7 @@ export class ReportsComponent implements OnInit {
   partnerEarnings: any[] = [];
   loading = true;
 
-  levelEarnings: { [key: string]: number } = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
+  levelEarnings: { [key: string]: number } = { L0: 0, L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
   sportEarnings: { [key: string]: number } = {};
 
   constructor(private apiService: ApiService) {}
@@ -39,7 +39,7 @@ export class ReportsComponent implements OnInit {
   }
 
   calculateSummaries(): void {
-    this.levelEarnings = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
+    this.levelEarnings = { L0: 0, L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
     this.sportEarnings = {};
 
     this.partnerEarnings.forEach(p => {

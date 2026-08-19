@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastService, Toast } from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,19 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'Sports Partnership Platform';
-  currentYear = new Date().getFullYear();
+  mobileMenuOpen = false;
+
+  constructor(public toastService: ToastService) {}
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+  }
+
+  dismissToast(id: string): void {
+    this.toastService.dismiss(id);
+  }
 }

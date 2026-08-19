@@ -3,13 +3,13 @@
   <div class="flex items-center justify-between">
     <div>
       <h2 class="text-2xl font-bold font-heading text-white">Visual Partner Hierarchy</h2>
-      <p class="text-sm text-slate-400">Interactive L1 → L2 → L3 → L4 → L5 partner network map</p>
+      <p class="text-xs text-slate-400">Complete multi-tier topology starting from Platform Owner → Level 1 → Level 2 → Level 3 → Level 4 → Level 5</p>
     </div>
     <button (click)="loadTree()" class="btn-secondary text-xs">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
       </svg>
-      Refresh Tree
+      Refresh Topology
     </button>
   </div>
 
@@ -19,82 +19,110 @@
 
   <div *ngIf="!loading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Visual Tree Diagram Container -->
-    <div class="lg:col-span-2 glass-panel p-6 overflow-x-auto min-h-[500px]">
-      <div class="space-y-8 min-w-[600px]">
-        <!-- Top Level Roots -->
+    <div class="lg:col-span-2 glass-panel p-6 overflow-x-auto min-h-[550px]">
+      <div class="space-y-8 min-w-[620px]">
+        <!-- Level 0: Top Owner Roots -->
         <div *ngFor="let root of treeNodes" class="space-y-6">
-          <!-- Level 1 Root Node Card -->
-          <div (click)="selectNode(root)" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/60 to-slate-900 border border-amber-500/40 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-lg">
+          <!-- Level 0 (Owner) Node Card -->
+          <div (click)="selectNode(root)" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/70 via-[#131927] to-[#0d1322] border border-amber-500/50 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-lg shadow-amber-950/30">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-400">
-                L1
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center font-bold text-amber-300 text-sm shadow-inner">
+                👑
               </div>
               <div>
-                <h4 class="font-bold font-heading text-white text-base">{{ root.name }}</h4>
-                <p class="text-xs font-mono text-amber-300/80">{{ root.partnerId }} • Level 1 Senior Partner</p>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-bold font-heading text-white text-base">{{ root.name }}</h4>
+                  <span class="text-[9px] px-2 py-0.5 rounded-full badge-l0 font-extrabold uppercase">PLATFORM ROOT OWNER</span>
+                </div>
+                <p class="text-xs font-mono text-amber-300/80">{{ root.partnerId }} • 100% Initial Sports Pool</p>
               </div>
             </div>
-            <span class="text-xs px-3 py-1 rounded-full badge-l1 font-bold">Root Partner</span>
+            <span class="text-xs text-slate-400 font-medium">Click to inspect →</span>
           </div>
 
-          <!-- Level 2 Branch (Children of L1) -->
-          <div *ngIf="root.children?.length" class="pl-8 border-l-2 border-slate-800 space-y-6 ml-5">
-            <div *ngFor="let l2 of root.children" class="space-y-4">
-              <!-- Level 2 Node Card -->
-              <div (click)="selectNode(l2)" class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/30 cursor-pointer hover:border-sky-400 transition-all flex items-center justify-between">
+          <!-- Level 1 Branch (Children of Owner) -->
+          <div *ngIf="root.children?.length" class="pl-8 border-l-2 border-amber-500/30 space-y-6 ml-5">
+            <div *ngFor="let l1 of root.children" class="space-y-4">
+              <!-- Level 1 Node Card -->
+              <div (click)="selectNode(l1)" class="p-3.5 rounded-xl bg-[#0f172a] border border-amber-500/30 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-sky-400 text-xs">
-                    L2
+                  <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center font-bold text-amber-400 text-xs">
+                    L1
                   </div>
                   <div>
-                    <h5 class="font-bold text-slate-100 text-sm">{{ l2.name }}</h5>
-                    <p class="text-[11px] font-mono text-sky-400/80">{{ l2.partnerId }} • Sub-Partner</p>
+                    <div class="flex items-center gap-2">
+                      <h5 class="font-bold text-slate-100 text-sm">{{ l1.name }}</h5>
+                      <span class="text-[10px] px-2 py-0.5 rounded badge-l1 font-bold">Level 1 (Senior Partner)</span>
+                    </div>
+                    <p class="text-[11px] font-mono text-amber-400/80">{{ l1.partnerId }} • Direct Downline of Owner</p>
                   </div>
                 </div>
-                <span class="text-[10px] px-2 py-0.5 rounded badge-l2 font-semibold">Level 2</span>
+                <span class="text-[11px] text-slate-500">Inspect</span>
               </div>
 
-              <!-- Level 3 Branch (Children of L2) -->
-              <div *ngIf="l2.children?.length" class="pl-6 border-l-2 border-slate-800/80 space-y-4 ml-4">
-                <div *ngFor="let l3 of l2.children" class="space-y-3">
-                  <!-- Level 3 Node Card -->
-                  <div (click)="selectNode(l3)" class="p-3 rounded-lg bg-slate-900/60 border border-emerald-500/30 cursor-pointer hover:border-emerald-400 transition-all flex items-center justify-between">
+              <!-- Level 2 Branch (Children of L1) -->
+              <div *ngIf="l1.children?.length" class="pl-6 border-l-2 border-sky-500/30 space-y-4 ml-4">
+                <div *ngFor="let l2 of l1.children" class="space-y-3">
+                  <!-- Level 2 Node Card -->
+                  <div (click)="selectNode(l2)" class="p-3 rounded-lg bg-[#0e1628] border border-sky-500/30 cursor-pointer hover:border-sky-400 transition-all flex items-center justify-between shadow-sm">
                     <div class="flex items-center gap-2.5">
-                      <div class="w-7 h-7 rounded bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400 text-[11px]">
-                        L3
+                      <div class="w-7 h-7 rounded bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-bold text-sky-400 text-[11px]">
+                        L2
                       </div>
                       <div>
-                        <h6 class="font-bold text-slate-200 text-xs">{{ l3.name }}</h6>
-                        <p class="text-[10px] font-mono text-emerald-400/80">{{ l3.partnerId }}</p>
+                        <div class="flex items-center gap-2">
+                          <h6 class="font-bold text-slate-200 text-xs">{{ l2.name }}</h6>
+                          <span class="text-[9px] px-1.5 py-0.2 rounded badge-l2 font-semibold">Level 2 (Sub-Partner)</span>
+                        </div>
+                        <p class="text-[10px] font-mono text-sky-400/80">{{ l2.partnerId }}</p>
                       </div>
                     </div>
-                    <span class="text-[10px] px-2 py-0.5 rounded badge-l3 font-semibold">Level 3</span>
+                    <span class="text-[10px] text-slate-500">Inspect</span>
                   </div>
 
-                  <!-- Level 4 Branch (Children of L3) -->
-                  <div *ngIf="l3.children?.length" class="pl-6 border-l-2 border-slate-800/60 space-y-3 ml-3">
-                    <div *ngFor="let l4 of l3.children" class="space-y-2">
-                      <!-- Level 4 Node Card -->
-                      <div (click)="selectNode(l4)" class="p-2.5 rounded-lg bg-slate-900/40 border border-purple-500/30 cursor-pointer hover:border-purple-400 transition-all flex items-center justify-between">
+                  <!-- Level 3 Branch (Children of L2) -->
+                  <div *ngIf="l2.children?.length" class="pl-6 border-l-2 border-emerald-500/30 space-y-3 ml-3">
+                    <div *ngFor="let l3 of l2.children" class="space-y-2">
+                      <!-- Level 3 Node Card -->
+                      <div (click)="selectNode(l3)" class="p-2.5 rounded-lg bg-[#0c1322] border border-emerald-500/30 cursor-pointer hover:border-emerald-400 transition-all flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                          <div class="w-6 h-6 rounded bg-purple-500/20 border border-purple-500/30 flex items-center justify-center font-bold text-purple-400 text-[10px]">
-                            L4
+                          <div class="w-6 h-6 rounded bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400 text-[10px]">
+                            L3
                           </div>
-                          <span class="font-semibold text-slate-300 text-xs">{{ l4.name }}</span>
+                          <div>
+                            <span class="font-semibold text-slate-300 text-xs">{{ l3.name }}</span>
+                            <span class="text-[9px] text-slate-500 font-mono ml-1">({{ l3.partnerId }})</span>
+                          </div>
                         </div>
-                        <span class="text-[10px] px-2 py-0.5 rounded badge-l4 font-semibold">Level 4</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded badge-l3 font-semibold">Level 3 (Master Agent)</span>
                       </div>
 
-                      <!-- Level 5 Branch (Children of L4) -->
-                      <div *ngIf="l4.children?.length" class="pl-5 border-l-2 border-slate-800/40 space-y-2 ml-3">
-                        <div *ngFor="let l5 of l4.children" (click)="selectNode(l5)" class="p-2 rounded bg-slate-900/30 border border-rose-500/30 cursor-pointer hover:border-rose-400 transition-all flex items-center justify-between text-xs">
-                          <div class="flex items-center gap-2">
-                            <div class="w-5 h-5 rounded bg-rose-500/20 border border-rose-500/30 flex items-center justify-center font-bold text-rose-400 text-[9px]">
-                              L5
+                      <!-- Level 4 Branch (Children of L3) -->
+                      <div *ngIf="l3.children?.length" class="pl-5 border-l-2 border-purple-500/30 space-y-2 ml-3">
+                        <div *ngFor="let l4 of l3.children" class="space-y-1.5">
+                          <!-- Level 4 Node Card -->
+                          <div (click)="selectNode(l4)" class="p-2 rounded bg-[#0b101c] border border-purple-500/30 cursor-pointer hover:border-purple-400 transition-all flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                              <div class="w-5 h-5 rounded bg-purple-500/10 border border-purple-500/30 flex items-center justify-center font-bold text-purple-400 text-[9px]">
+                                L4
+                              </div>
+                              <span class="font-medium text-slate-300 text-[11px]">{{ l4.name }}</span>
                             </div>
-                            <span class="font-medium text-slate-400 text-[11px]">{{ l5.name }}</span>
+                            <span class="text-[9px] px-1.5 py-0.5 rounded badge-l4 font-bold">Level 4 (Agent)</span>
                           </div>
-                          <span class="text-[9px] px-1.5 py-0.5 rounded badge-l5 font-bold">Level 5</span>
+
+                          <!-- Level 5 Branch (Children of L4) -->
+                          <div *ngIf="l4.children?.length" class="pl-4 border-l-2 border-rose-500/30 space-y-1.5 ml-2.5">
+                            <div *ngFor="let l5 of l4.children" (click)="selectNode(l5)" class="p-2 rounded bg-[#090d17] border border-rose-500/30 cursor-pointer hover:border-rose-400 transition-all flex items-center justify-between text-xs">
+                              <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded bg-rose-500/10 border border-rose-500/30 flex items-center justify-center font-bold text-rose-400 text-[8px]">
+                                  L5
+                                </div>
+                                <span class="font-medium text-slate-400 text-[10px]">{{ l5.name }}</span>
+                              </div>
+                              <span class="text-[8px] px-1 py-0.5 rounded badge-l5 font-bold">Level 5 (Sub-Agent)</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -110,68 +138,80 @@
     <!-- Inspector / Node Details Side Panel -->
     <div class="glass-panel p-6 h-fit">
       <div *ngIf="!selectedNode" class="text-center py-12 text-slate-400 space-y-3">
-        <svg class="w-12 h-12 mx-auto text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-10 h-10 mx-auto text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
         </svg>
-        <p class="text-xs font-medium">Click on any node in the hierarchy tree to inspect details and partnership percentages</p>
+        <p class="text-xs font-medium">Click on any node in the topology tree to inspect its upline path and sport commissions</p>
       </div>
 
-      <div *ngIf="selectedNode" class="space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div *ngIf="selectedNode" class="space-y-5">
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <div>
             <span [ngClass]="{
+              'badge-l0': selectedNode.level === 0,
               'badge-l1': selectedNode.level === 1,
               'badge-l2': selectedNode.level === 2,
               'badge-l3': selectedNode.level === 3,
               'badge-l4': selectedNode.level === 4,
               'badge-l5': selectedNode.level === 5
             }" class="px-2.5 py-0.5 rounded text-[10px] font-bold">
-              LEVEL {{ selectedNode.level }}
+              {{ selectedNode.level === 0 ? 'PLATFORM ROOT OWNER' : 'LEVEL ' + selectedNode.level }}
             </span>
             <h3 class="text-lg font-bold font-heading text-white mt-1">{{ selectedNode.name }}</h3>
             <p class="text-xs font-mono text-indigo-400">{{ selectedNode.partnerId }}</p>
           </div>
-          <button (click)="closeNodeDetail()" class="text-slate-400 hover:text-white">✕</button>
+          <button (click)="closeNodeDetail()" class="text-slate-400 hover:text-white text-xs">✕</button>
         </div>
 
-        <div class="space-y-4 text-xs">
+        <div class="space-y-3.5 text-xs">
+          <!-- Role Title -->
+          <div class="flex justify-between items-center p-2.5 rounded-lg bg-[#0b101c]">
+            <span class="text-slate-400">Platform Role</span>
+            <span class="text-slate-200 font-semibold">{{ selectedNode.roleTitle || (selectedNode.level === 0 ? 'Platform Owner' : 'Level ' + selectedNode.level) }}</span>
+          </div>
+
           <!-- Status -->
-          <div class="flex justify-between items-center p-2.5 rounded-lg bg-slate-900/60">
+          <div class="flex justify-between items-center p-2.5 rounded-lg bg-[#0b101c]">
             <span class="text-slate-400">Account Status</span>
-            <span class="text-emerald-400 font-bold">Active</span>
+            <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active
+            </span>
           </div>
 
           <!-- SportsWise Breakdown -->
-          <div class="space-y-3">
-            <h4 class="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Active Sports Partnerships</h4>
+          <div class="space-y-2.5 pt-1">
+            <h4 class="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Sport Commission Configuration</h4>
             
-            <div class="p-3 rounded-xl bg-slate-900/80 border border-amber-500/20 space-y-1">
-              <div class="flex justify-between text-amber-400 font-bold">
+            <!-- Cricket -->
+            <div class="p-3 rounded-xl bg-[#0b101c] border border-amber-500/20 space-y-1">
+              <div class="flex justify-between text-amber-400 font-bold text-xs">
                 <span>Cricket</span>
-                <span>{{ selectedNode.sportsPartnership?.cricket?.remaining || (selectedNode.level === 1 ? 20 : 0) }}% Retained</span>
+                <span>{{ selectedNode.sportsPartnership?.cricket?.remaining || (selectedNode.level === 0 ? 20 : 0) }}% Retained</span>
               </div>
               <p class="text-[10px] text-slate-400">
-                Received: {{ selectedNode.sportsPartnership?.cricket?.received || 0 }}% • Given: {{ selectedNode.sportsPartnership?.cricket?.given || 0 }}%
+                Received: {{ selectedNode.sportsPartnership?.cricket?.received || (selectedNode.level === 0 ? 100 : 0) }}% • Given: {{ selectedNode.sportsPartnership?.cricket?.given || 0 }}%
               </p>
             </div>
 
-            <div class="p-3 rounded-xl bg-slate-900/80 border border-cyan-500/20 space-y-1">
-              <div class="flex justify-between text-cyan-400 font-bold">
+            <!-- Tennis -->
+            <div class="p-3 rounded-xl bg-[#0b101c] border border-sky-500/20 space-y-1">
+              <div class="flex justify-between text-sky-400 font-bold text-xs">
                 <span>Tennis</span>
-                <span>{{ selectedNode.sportsPartnership?.tennis?.remaining || (selectedNode.level === 1 ? 40 : 0) }}% Retained</span>
+                <span>{{ selectedNode.sportsPartnership?.tennis?.remaining || (selectedNode.level === 0 ? 40 : 0) }}% Retained</span>
               </div>
               <p class="text-[10px] text-slate-400">
-                Received: {{ selectedNode.sportsPartnership?.tennis?.received || 0 }}% • Given: {{ selectedNode.sportsPartnership?.tennis?.given || 0 }}%
+                Received: {{ selectedNode.sportsPartnership?.tennis?.received || (selectedNode.level === 0 ? 100 : 0) }}% • Given: {{ selectedNode.sportsPartnership?.tennis?.given || 0 }}%
               </p>
             </div>
 
-            <div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/20 space-y-1">
-              <div class="flex justify-between text-emerald-400 font-bold">
+            <!-- Football -->
+            <div class="p-3 rounded-xl bg-[#0b101c] border border-emerald-500/20 space-y-1">
+              <div class="flex justify-between text-emerald-400 font-bold text-xs">
                 <span>Football</span>
-                <span>{{ selectedNode.sportsPartnership?.football?.remaining || (selectedNode.level === 1 ? 30 : 0) }}% Retained</span>
+                <span>{{ selectedNode.sportsPartnership?.football?.remaining || (selectedNode.level === 0 ? 30 : 0) }}% Retained</span>
               </div>
               <p class="text-[10px] text-slate-400">
-                Received: {{ selectedNode.sportsPartnership?.football?.received || 0 }}% • Given: {{ selectedNode.sportsPartnership?.football?.given || 0 }}%
+                Received: {{ selectedNode.sportsPartnership?.football?.received || (selectedNode.level === 0 ? 100 : 0) }}% • Given: {{ selectedNode.sportsPartnership?.football?.given || 0 }}%
               </p>
             </div>
           </div>

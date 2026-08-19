@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
+import { ToastService } from '../../core/services/toast.service';
 import { Partner } from '../../core/models/partner.model';
 import { Sport } from '../../core/models/sport.model';
 import { Transaction } from '../../core/models/transaction.model';
@@ -33,7 +34,10 @@ export class TransactionsComponent implements OnInit {
   selectedTxDetail: Transaction | null = null;
   showTxModal = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -46,6 +50,7 @@ export class TransactionsComponent implements OnInit {
         if (res.success) {
           this.partners = res.data;
           if (this.partners.length > 0) {
+            // Select Raj Singh (L3) by default if available, or first partner
             const raj = this.partners.find(p => p.partnerId === 'P-10078') || this.partners[0];
             this.selectedPartnerId = raj._id;
             this.calculate();
@@ -79,6 +84,18 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
+  setScenario(partnerCode: string, sport: string, amount: number, note: string): void {
+    const partner = this.partners.find(p => p.partnerId === partnerCode);
+    if (partner) {
+      this.selectedPartnerId = partner._id;
+      this.selectedSport = sport;
+      this.amount = amount;
+      this.note = note;
+      this.calculate();
+      this.toastService.info('Preset Loaded', `Loaded scenario: ${note} (₹${amount.toLocaleString()})`);
+    }
+  }
+
   calculate(): void {
     if (!this.selectedPartnerId || !this.amount || this.amount <= 0) return;
     this.calculating = true;
@@ -102,7 +119,11 @@ export class TransactionsComponent implements OnInit {
   }
 
   processTransaction(): void {
-    if (!this.selectedPartnerId || !this.amount || this.amount <= 0) return;
+    if (!this.selectedPartnerId || !this.amount || this.amount <= 0) {
+      this.toastService.error('Validation Error', 'Please select a partner and enter a valid positive amount');
+      return;
+    }
+
     this.submitting = true;
 
     this.apiService.createTransaction({
@@ -114,12 +135,17 @@ export class TransactionsComponent implements OnInit {
       next: (res) => {
         this.submitting = false;
         if (res.success) {
+          this.toastService.success(
+            'Transaction Settled',
+            `Transaction ${res.data.transactionId} for ₹${this.amount.toLocaleString()} successfully distributed up to Owner`
+          );
           this.note = '';
           this.loadTransactions();
         }
       },
       error: (err) => {
         console.error(err);
+        this.toastService.error('Transaction Failed', err?.error?.message || 'Could not record transaction');
         this.submitting = false;
       }
     });

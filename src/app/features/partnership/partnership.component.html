@@ -2,21 +2,21 @@
   <!-- Title -->
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
-      <h2 class="text-2xl font-bold font-heading text-white">Partnership Configuration</h2>
-      <p class="text-sm text-slate-400">Configure Given, Received, and Remaining percentages sports-wise</p>
+      <h2 class="text-2xl font-bold font-heading text-white">Partnership Matrix Configuration</h2>
+      <p class="text-xs text-slate-400">Configure Given, Received, and Retained percentages from Platform Owner down to Level 5</p>
     </div>
   </div>
 
   <!-- Sport Selector Tabs -->
-  <div class="flex items-center gap-2 border-b border-slate-800 pb-2">
+  <div class="flex items-center gap-2 border-b border-white/[0.08] pb-2">
     <button *for="let s of sports" (click)="selectedSportTab = s.code" [ngClass]="{
-      'bg-indigo-600/20 text-indigo-400 border-indigo-500': selectedSportTab === s.code,
-      'text-slate-400 border-transparent hover:text-slate-200': selectedSportTab !== s.code
-    }" class="px-4 py-2.5 rounded-xl font-heading font-bold text-xs uppercase tracking-wider border transition-all flex items-center gap-2">
-      <span class="w-2.5 h-2.5 rounded-full" [ngClass]="{
-        'bg-amber-400': s.code === 'cricket',
-        'bg-cyan-400': s.code === 'tennis',
-        'bg-emerald-400': s.code === 'football'
+      'bg-indigo-600/20 text-indigo-400 border-indigo-500/50 shadow-sm': selectedSportTab === s.code,
+      'text-slate-400 border-transparent hover:text-slate-200 hover:bg-white/[0.03]': selectedSportTab !== s.code
+    }" class="px-4 py-2 rounded-xl font-heading font-bold text-xs uppercase tracking-wider border transition-all flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full" [ngClass]="{
+        'bg-amber-400 shadow-sm shadow-amber-400/50': s.code === 'cricket',
+        'bg-sky-400 shadow-sm shadow-sky-400/50': s.code === 'tennis',
+        'bg-emerald-400 shadow-sm shadow-emerald-400/50': s.code === 'football'
       }"></span>
       {{ s.name }}
     </button>
@@ -31,61 +31,67 @@
     <div class="overflow-x-auto">
       <table class="w-full text-left border-collapse">
         <thead>
-          <tr class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-3">
+          <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-white/[0.08] pb-3">
             <th class="pb-3 px-4">Partner</th>
-            <th class="pb-3 px-4">Level</th>
+            <th class="pb-3 px-4">Tier Level</th>
             <th class="pb-3 px-4">Partnership Received</th>
             <th class="pb-3 px-4">Partnership Given (To Downline)</th>
             <th class="pb-3 px-4">Partnership Remaining (Retained)</th>
-            <th class="pb-3 px-4">Cake Share Bar</th>
+            <th class="pb-3 px-4">Share Distribution Bar</th>
             <th class="pb-3 px-4 text-right">Configure</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-800/60 text-xs">
-          <tr *ngFor="let row of matrix" class="hover:bg-slate-800/30 transition-colors">
+        <tbody class="divide-y divide-white/[0.06] text-xs">
+          <tr *ngFor="let row of matrix" class="hover:bg-white/[0.02] transition-colors">
             <!-- Partner -->
             <td class="py-3.5 px-4 font-semibold text-white">
-              {{ row.name }}
-              <span class="text-[10px] text-slate-500 font-mono block">{{ row.partnerId }}</span>
+              <div class="flex items-center gap-2">
+                <span *ngIf="row.level === 0" class="text-sm">👑</span>
+                <div>
+                  {{ row.name }}
+                  <span class="text-[10px] text-slate-500 font-mono block">{{ row.partnerId }}</span>
+                </div>
+              </div>
             </td>
 
             <!-- Level -->
             <td class="py-3.5 px-4">
               <span [ngClass]="{
+                'badge-l0': row.level === 0,
                 'badge-l1': row.level === 1,
                 'badge-l2': row.level === 2,
                 'badge-l3': row.level === 3,
                 'badge-l4': row.level === 4,
                 'badge-l5': row.level === 5
               }" class="px-2.5 py-0.5 rounded text-[10px] font-bold">
-                L{{ row.level }}
+                {{ row.level === 0 ? '👑 Owner' : 'Level ' + row.level }}
               </span>
             </td>
 
             <!-- Received % -->
-            <td class="py-3.5 px-4 font-bold text-sky-400">
-              {{ row.sportsWise[selectedSportTab]?.received || 0 }}%
+            <td class="py-3.5 px-4 font-bold text-sky-400 font-mono">
+              {{ row.sportsWise[selectedSportTab]?.received || (row.level === 0 ? 100 : 0) }}%
             </td>
 
             <!-- Given % -->
-            <td class="py-3.5 px-4 font-bold text-amber-400">
+            <td class="py-3.5 px-4 font-bold text-amber-400 font-mono">
               {{ row.sportsWise[selectedSportTab]?.given || 0 }}%
             </td>
 
             <!-- Remaining % -->
-            <td class="py-3.5 px-4 font-extrabold text-emerald-400">
-              {{ row.sportsWise[selectedSportTab]?.remaining || 0 }}%
+            <td class="py-3.5 px-4 font-extrabold text-emerald-400 font-mono">
+              {{ row.sportsWise[selectedSportTab]?.remaining || (row.level === 0 ? 100 : 0) }}%
             </td>
 
             <!-- Cake Bar -->
             <td class="py-3.5 px-4 min-w-[140px]">
-              <div class="h-4 rounded-full bg-slate-800 overflow-hidden flex border border-slate-700/60">
-                <div class="bg-emerald-500 h-full text-[9px] flex items-center justify-center font-bold text-slate-950"
+              <div class="h-4 rounded-full bg-[#0b101c] overflow-hidden flex border border-white/10 shadow-inner">
+                <div class="bg-emerald-500 h-full text-[9px] flex items-center justify-center font-bold text-slate-950 font-mono"
                      [style.width.%]="row.sportsWise[selectedSportTab]?.remaining || 0"
                      title="Retained: {{ row.sportsWise[selectedSportTab]?.remaining || 0 }}%">
                   <span *ngIf="(row.sportsWise[selectedSportTab]?.remaining || 0) >= 15">{{ row.sportsWise[selectedSportTab]?.remaining }}%</span>
                 </div>
-                <div class="bg-amber-500 h-full text-[9px] flex items-center justify-center font-bold text-slate-950"
+                <div class="bg-amber-500 h-full text-[9px] flex items-center justify-center font-bold text-slate-950 font-mono"
                      [style.width.%]="row.sportsWise[selectedSportTab]?.given || 0"
                      title="Given: {{ row.sportsWise[selectedSportTab]?.given || 0 }}%">
                   <span *ngIf="(row.sportsWise[selectedSportTab]?.given || 0) >= 15">{{ row.sportsWise[selectedSportTab]?.given }}%</span>
@@ -95,8 +101,8 @@
 
             <!-- Configure Button -->
             <td class="py-3.5 px-4 text-right">
-              <button (click)="openEditModal(row, selectedSportTab)" class="btn-secondary text-[11px] px-3 py-1">
-                Edit Allocation
+              <button (click)="openEditModal(row, selectedSportTab)" class="btn-secondary text-[11px] px-2.5 py-1">
+                Edit Split
               </button>
             </td>
           </tr>
@@ -107,44 +113,46 @@
 
   <!-- Edit Partnership Modal -->
   <div *ngIf="showEditModal && editingPartner" class="modal-overlay">
-    <div class="glass-panel w-full max-w-md p-6 space-y-6 animate-in fade-in zoom-in duration-200">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div class="glass-panel w-full max-w-md p-6 space-y-5 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
         <div>
-          <h3 class="text-lg font-bold font-heading text-white">Configure Partnership</h3>
-          <p class="text-xs text-slate-400">{{ editingPartner.name }} (L{{ editingPartner.level }}) • <span class="uppercase text-amber-400 font-bold">{{ editingSportCode }}</span></p>
+          <h3 class="text-base font-bold font-heading text-white">Configure Partnership Allocation</h3>
+          <p class="text-xs text-slate-400">
+            {{ editingPartner.name }} ({{ editingPartner.level === 0 ? '👑 Owner' : 'L' + editingPartner.level }}) • <span class="uppercase text-amber-400 font-bold font-mono">{{ editingSportCode }}</span>
+          </p>
         </div>
-        <button (click)="closeEditModal()" class="text-slate-400 hover:text-white">✕</button>
+        <button (click)="closeEditModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
       </div>
 
       <div *ngIf="saveError" class="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">
         {{ saveError }}
       </div>
 
-      <div class="space-y-5 text-xs">
-        <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between items-center">
+      <div class="space-y-4 text-xs">
+        <div class="p-3 rounded-xl bg-[#0b101c] border border-white/[0.08] flex justify-between items-center">
           <span class="text-slate-400">Available Received Partnership:</span>
-          <span class="text-base font-extrabold text-sky-400">{{ editingReceived }}%</span>
+          <span class="text-sm font-extrabold text-sky-400 font-mono">{{ editingReceived }}%</span>
         </div>
 
         <div>
           <div class="flex justify-between items-center mb-2 font-semibold text-slate-300">
-            <span>Partnership Given (To Downline L{{ editingPartner.level + 1 }}):</span>
-            <span class="text-amber-400 font-bold text-sm">{{ editingGiven }}%</span>
+            <span>Partnership Given (To Downline {{ editingPartner.level === 0 ? 'Level 1' : 'Level ' + (editingPartner.level + 1) }}):</span>
+            <span class="text-amber-400 font-bold text-sm font-mono">{{ editingGiven }}%</span>
           </div>
           <input type="range" min="0" [max]="editingReceived" [(ngModel)]="editingGiven" (input)="onGivenChange()" class="w-full cursor-pointer" />
         </div>
 
-        <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex justify-between items-center">
-          <span class="text-slate-300 font-semibold">Partnership Remaining (Retained by {{ editingPartner.name }}):</span>
-          <span class="text-base font-black text-emerald-400">{{ editingRemaining }}%</span>
+        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex justify-between items-center">
+          <span class="text-slate-300 font-semibold">Partnership Remaining (Retained):</span>
+          <span class="text-base font-black text-emerald-400 font-mono">{{ editingRemaining }}%</span>
         </div>
 
-        <p class="text-[11px] text-slate-400 italic bg-slate-900/50 p-2.5 rounded-lg">
-          Formula: <span class="text-sky-300 font-mono">Remaining ({{ editingRemaining }}%)</span> = <span class="text-amber-300 font-mono">Received ({{ editingReceived }}%)</span> - <span class="text-emerald-300 font-mono">Given ({{ editingGiven }}%)</span>. Saving will automatically update downline partners.
+        <p class="text-[11px] text-slate-400 italic bg-[#0b101c] p-2.5 rounded-lg border border-white/[0.04]">
+          Formula: <span class="text-emerald-300 font-mono font-semibold">Retained ({{ editingRemaining }}%)</span> = <span class="text-sky-300 font-mono font-semibold">Received ({{ editingReceived }}%)</span> - <span class="text-amber-300 font-mono font-semibold">Given ({{ editingGiven }}%)</span>. Saving cascades recursively down to all children.
         </p>
       </div>
 
-      <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+      <div class="flex justify-end gap-3 pt-4 border-t border-white/[0.08]">
         <button (click)="closeEditModal()" class="btn-secondary">Cancel</button>
         <button (click)="savePartnership()" [disabled]="saving" class="btn-primary">
           <span *ngIf="saving">Saving & Cascading...</span>
