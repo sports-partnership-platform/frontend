@@ -38,6 +38,10 @@ export class ApiService {
     return this.http.delete<{ success: boolean; message: string }>(`${this.baseUrl}/partners/${id}`);
   }
 
+  resetPartnerPassword(id: string, payload?: { newPassword?: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/partners/${id}/reset-password`, payload || {});
+  }
+
   // --- Partnerships ---
   getPartnershipMatrix(): Observable<{ success: boolean; data: { sports: Sport[]; matrix: any[] } }> {
     return this.http.get<{ success: boolean; data: { sports: Sport[]; matrix: any[] } }>(`${this.baseUrl}/partnerships/matrix`);

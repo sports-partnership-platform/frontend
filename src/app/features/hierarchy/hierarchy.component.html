@@ -20,120 +20,53 @@
   <div *ngIf="!loading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Visual Tree Diagram Container -->
     <div class="lg:col-span-2 glass-panel p-6 overflow-x-auto min-h-[550px]">
-      <div class="space-y-8 min-w-[620px]">
-        <!-- Level 0: Top Owner Roots -->
-        <div *ngFor="let root of treeNodes" class="space-y-6">
-          <!-- Level 0 (Owner) Node Card -->
-          <div (click)="selectNode(root)" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/70 via-[#131927] to-[#0d1322] border border-amber-500/50 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-lg shadow-amber-950/30">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shadow-inner">
-                <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-                </svg>
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <h4 class="font-bold font-heading text-white text-base">{{ root.name }}</h4>
-                  <span class="text-[9px] px-2 py-0.5 rounded-full badge-l0 font-extrabold uppercase">PLATFORM ROOT OWNER</span>
+      <div class="space-y-6 min-w-[620px]">
+        <!-- Top Nodes in Scoped Hierarchy -->
+        <ng-container *ngFor="let root of treeNodes">
+          <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: root, isRoot: true }"></ng-container>
+        </ng-container>
+
+        <!-- Recursive Node Template -->
+        <ng-template #nodeTemplate let-node="node" let-isRoot="isRoot">
+          <div class="space-y-4">
+            <!-- Node Card -->
+            <div (click)="selectNode(node)" 
+                 [ngClass]="getNodeCardClass(node.level)"
+                 class="p-3.5 rounded-xl cursor-pointer transition-all flex items-center justify-between shadow-sm">
+              <div class="flex items-center gap-3">
+                <!-- Level Icon / Avatar -->
+                <div *ngIf="node.level === 0" class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shadow-inner">
+                  <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                  </svg>
                 </div>
-                <p class="text-xs font-mono text-amber-300/80">{{ root.partnerId }} • 100% Initial Sports Pool</p>
+                <div *ngIf="node.level !== 0" [ngClass]="getIconBoxClass(node.level)" class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs">
+                  L{{ node.level }}
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-bold text-white" [ngClass]="node.level === 0 ? 'text-base font-heading' : 'text-sm'">{{ node.name }}</h4>
+                    <span [ngClass]="getBadgeClass(node.level)" class="text-[9px] px-2 py-0.5 rounded uppercase">
+                      {{ getRoleLabel(node) }}
+                    </span>
+                  </div>
+                  <p class="text-[11px] font-mono" [ngClass]="getSubtitleClass(node.level)">
+                    {{ node.partnerId }} • {{ node.level === 0 ? '100% Initial Sports Pool' : (node.roleTitle || 'Level ' + node.level) }}
+                  </p>
+                </div>
               </div>
+              <span class="text-[11px] text-slate-400 font-medium">Click to inspect →</span>
             </div>
-            <span class="text-xs text-slate-400 font-medium">Click to inspect →</span>
-          </div>
 
-          <!-- Level 1 Branch (Children of Owner) -->
-          <div *ngIf="root.children?.length" class="pl-8 border-l-2 border-amber-500/30 space-y-6 ml-5">
-            <div *ngFor="let l1 of root.children" class="space-y-4">
-              <!-- Level 1 Node Card -->
-              <div (click)="selectNode(l1)" class="p-3.5 rounded-xl bg-[#0f172a] border border-amber-500/30 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center font-bold text-amber-400 text-xs">
-                    L1
-                  </div>
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <h5 class="font-bold text-slate-100 text-sm">{{ l1.name }}</h5>
-                      <span class="text-[10px] px-2 py-0.5 rounded badge-l1 font-bold">Level 1 (Senior Partner)</span>
-                    </div>
-                    <p class="text-[11px] font-mono text-amber-400/80">{{ l1.partnerId }} • Direct Downline of Owner</p>
-                  </div>
-                </div>
-                <span class="text-[11px] text-slate-500">Inspect</span>
-              </div>
-
-              <!-- Level 2 Branch (Children of L1) -->
-              <div *ngIf="l1.children?.length" class="pl-6 border-l-2 border-sky-500/30 space-y-4 ml-4">
-                <div *ngFor="let l2 of l1.children" class="space-y-3">
-                  <!-- Level 2 Node Card -->
-                  <div (click)="selectNode(l2)" class="p-3 rounded-lg bg-[#0e1628] border border-sky-500/30 cursor-pointer hover:border-sky-400 transition-all flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-2.5">
-                      <div class="w-7 h-7 rounded bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-bold text-sky-400 text-[11px]">
-                        L2
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <h6 class="font-bold text-slate-200 text-xs">{{ l2.name }}</h6>
-                          <span class="text-[9px] px-1.5 py-0.2 rounded badge-l2 font-semibold">Level 2 (Sub-Partner)</span>
-                        </div>
-                        <p class="text-[10px] font-mono text-sky-400/80">{{ l2.partnerId }}</p>
-                      </div>
-                    </div>
-                    <span class="text-[10px] text-slate-500">Inspect</span>
-                  </div>
-
-                  <!-- Level 3 Branch (Children of L2) -->
-                  <div *ngIf="l2.children?.length" class="pl-6 border-l-2 border-emerald-500/30 space-y-3 ml-3">
-                    <div *ngFor="let l3 of l2.children" class="space-y-2">
-                      <!-- Level 3 Node Card -->
-                      <div (click)="selectNode(l3)" class="p-2.5 rounded-lg bg-[#0c1322] border border-emerald-500/30 cursor-pointer hover:border-emerald-400 transition-all flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <div class="w-6 h-6 rounded bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400 text-[10px]">
-                            L3
-                          </div>
-                          <div>
-                            <span class="font-semibold text-slate-300 text-xs">{{ l3.name }}</span>
-                            <span class="text-[9px] text-slate-500 font-mono ml-1">({{ l3.partnerId }})</span>
-                          </div>
-                        </div>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded badge-l3 font-semibold">Level 3 (Master Agent)</span>
-                      </div>
-
-                      <!-- Level 4 Branch (Children of L3) -->
-                      <div *ngIf="l3.children?.length" class="pl-5 border-l-2 border-purple-500/30 space-y-2 ml-3">
-                        <div *ngFor="let l4 of l3.children" class="space-y-1.5">
-                          <!-- Level 4 Node Card -->
-                          <div (click)="selectNode(l4)" class="p-2 rounded bg-[#0b101c] border border-purple-500/30 cursor-pointer hover:border-purple-400 transition-all flex items-center justify-between text-xs">
-                            <div class="flex items-center gap-2">
-                              <div class="w-5 h-5 rounded bg-purple-500/10 border border-purple-500/30 flex items-center justify-center font-bold text-purple-400 text-[9px]">
-                                L4
-                              </div>
-                              <span class="font-medium text-slate-300 text-[11px]">{{ l4.name }}</span>
-                            </div>
-                            <span class="text-[9px] px-1.5 py-0.5 rounded badge-l4 font-bold">Level 4 (Agent)</span>
-                          </div>
-
-                          <!-- Level 5 Branch (Children of L4) -->
-                          <div *ngIf="l4.children?.length" class="pl-4 border-l-2 border-rose-500/30 space-y-1.5 ml-2.5">
-                            <div *ngFor="let l5 of l4.children" (click)="selectNode(l5)" class="p-2 rounded bg-[#090d17] border border-rose-500/30 cursor-pointer hover:border-rose-400 transition-all flex items-center justify-between text-xs">
-                              <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded bg-rose-500/10 border border-rose-500/30 flex items-center justify-center font-bold text-rose-400 text-[8px]">
-                                  L5
-                                </div>
-                                <span class="font-medium text-slate-400 text-[10px]">{{ l5.name }}</span>
-                              </div>
-                              <span class="text-[8px] px-1 py-0.5 rounded badge-l5 font-bold">Level 5 (Sub-Agent)</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <!-- Children Recursive Branch -->
+            <div *ngIf="node.children?.length" [ngClass]="getBranchBorderClass(node.level)" class="pl-6 border-l-2 space-y-4 ml-4">
+              <ng-container *ngFor="let child of node.children">
+                <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: child, isRoot: false }"></ng-container>
+              </ng-container>
             </div>
           </div>
-        </div>
+        </ng-template>
       </div>
     </div>
 

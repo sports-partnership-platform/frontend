@@ -61,15 +61,39 @@ export class PartnershipComponent implements OnInit {
   }
 
   onGivenChange(): void {
-    if (this.editingGiven < 0) this.editingGiven = 0;
-    if (this.editingGiven > this.editingReceived) {
+    if (this.editingGiven === null || this.editingGiven === undefined || (this.editingGiven as any) === '') {
+      this.editingRemaining = this.editingReceived;
+      return;
+    }
+    let val = Number(this.editingGiven);
+    if (isNaN(val)) {
+      this.editingRemaining = this.editingReceived;
+      return;
+    }
+    if (val < 0) {
+      val = 0;
+      this.editingGiven = 0;
+    } else if (val > this.editingReceived) {
+      val = this.editingReceived;
       this.editingGiven = this.editingReceived;
     }
-    this.editingRemaining = this.editingReceived - this.editingGiven;
+    this.editingRemaining = Math.max(0, Math.round((this.editingReceived - val) * 100) / 100);
+  }
+
+  onGivenBlur(): void {
+    if (this.editingGiven === null || this.editingGiven === undefined || (this.editingGiven as any) === '' || isNaN(Number(this.editingGiven))) {
+      this.editingGiven = 0;
+    } else if (this.editingGiven < 0) {
+      this.editingGiven = 0;
+    } else if (this.editingGiven > this.editingReceived) {
+      this.editingGiven = this.editingReceived;
+    }
+    this.onGivenChange();
   }
 
   savePartnership(): void {
     if (!this.editingPartner) return;
+    this.onGivenBlur();
     this.saving = true;
     this.saveError = '';
 

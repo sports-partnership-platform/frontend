@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ToastService, Toast } from './core/services/toast.service';
+import { ToastService } from './core/services/toast.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,10 @@ export class AppComponent {
   title = 'Sports Partnership Platform';
   mobileMenuOpen = false;
 
-  constructor(public toastService: ToastService) {}
+  constructor(
+    public toastService: ToastService,
+    public authService: AuthService
+  ) {}
 
   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
@@ -26,5 +30,11 @@ export class AppComponent {
 
   dismissToast(id: string): void {
     this.toastService.dismiss(id);
+  }
+
+  logout(): void {
+    this.closeMobileMenu();
+    this.authService.logout();
+    this.toastService.info('Signed Out', 'You have been safely signed out of your account');
   }
 }

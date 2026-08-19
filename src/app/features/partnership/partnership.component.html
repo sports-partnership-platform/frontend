@@ -142,12 +142,41 @@
           <span class="text-sm font-extrabold text-sky-400 font-mono">{{ editingReceived }}%</span>
         </div>
 
-        <div>
-          <div class="flex justify-between items-center mb-2 font-semibold text-slate-300">
-            <span>Partnership Given (To Downline {{ editingPartner.level === 0 ? 'Level 1' : 'Level ' + (editingPartner.level + 1) }}):</span>
-            <span class="text-amber-400 font-bold text-sm font-mono">{{ editingGiven }}%</span>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center font-semibold text-slate-300">
+            <label for="partnershipGivenInput" class="cursor-pointer">Partnership Given (To Downline {{ editingPartner.level === 0 ? 'Level 1' : 'Level ' + (editingPartner.level + 1) }}):</label>
+            <div class="relative flex items-center">
+              <input 
+                id="partnershipGivenInput"
+                type="number" 
+                min="0" 
+                [max]="editingReceived" 
+                step="any"
+                [(ngModel)]="editingGiven" 
+                (input)="onGivenChange()" 
+                (blur)="onGivenBlur()"
+                class="w-24 form-input text-right font-mono font-bold text-amber-400 text-sm py-1 pr-6 pl-2 bg-[#080c14] border border-amber-500/40 focus:border-amber-400 rounded-lg shadow-inner" 
+                placeholder="0"
+              />
+              <span class="absolute right-2 text-amber-400/80 font-mono font-bold text-xs pointer-events-none">%</span>
+            </div>
           </div>
-          <input type="range" min="0" [max]="editingReceived" [(ngModel)]="editingGiven" (input)="onGivenChange()" class="w-full cursor-pointer" />
+          <div class="space-y-1 pt-1">
+            <input 
+              id="partnershipGivenSlider"
+              type="range" 
+              min="0" 
+              [max]="editingReceived" 
+              [(ngModel)]="editingGiven" 
+              (input)="onGivenChange()" 
+              class="w-full cursor-pointer" 
+              aria-label="Partnership Given percentage slider"
+            />
+            <div class="flex justify-between items-center text-[10px] font-mono text-slate-500 px-0.5">
+              <span>0%</span>
+              <span>Max: {{ editingReceived }}%</span>
+            </div>
+          </div>
         </div>
 
         <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex justify-between items-center">
