@@ -141,7 +141,7 @@
           </div>
         </div>
 
-        <!-- Sample Sports Share Distribution Bar (The 🍰 Analogy Visualized) -->
+        <!-- Sample Sports Share Distribution Bar (Multi-Tier Turnover Split Visualized) -->
         <div class="glass-panel p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
@@ -307,6 +307,11 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-white/[0.06] text-xs">
+            <tr *ngIf="!stats?.recentTransactions?.length">
+              <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
+                No transactions recorded yet. Settle transactions from the Transactions & Calc tab to see live ledger activity.
+              </td>
+            </tr>
             <tr *ngFor="let tx of stats?.recentTransactions" class="hover:bg-white/[0.02] transition-colors">
               <td class="py-3 px-4 font-mono font-bold text-indigo-400">{{ tx.transactionId }}</td>
               <td class="py-3 px-4 font-medium text-slate-200">

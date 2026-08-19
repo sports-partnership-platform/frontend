@@ -26,7 +26,7 @@
       <span class="text-xs font-semibold text-slate-400">Tier Filter:</span>
       <select [(ngModel)]="selectedLevelFilter" (change)="applyFilter()" class="form-input text-xs w-44">
         <option value="ALL">All Tiers (Owner → L5)</option>
-        <option value="0">👑 Owner (Root)</option>
+        <option value="0">Owner (Root)</option>
         <option value="1">Level 1 (Senior Partner)</option>
         <option value="2">Level 2 (Sub-Partner)</option>
         <option value="3">Level 3 (Master Agent)</option>
@@ -64,7 +64,10 @@
                   'bg-amber-500/20 text-amber-300 border border-amber-500/40': p.level === 0,
                   'bg-[#141d30] text-slate-300 border border-white/10': p.level > 0
                 }">
-                  {{ p.level === 0 ? '👑' : p.name.charAt(0) }}
+                  <svg *ngIf="p.level === 0" class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                  </svg>
+                  <span *ngIf="p.level > 0">{{ p.name.charAt(0) }}</span>
                 </div>
                 <div>
                   <span>{{ p.name }}</span>
@@ -86,7 +89,7 @@
                 'badge-l4': p.level === 4,
                 'badge-l5': p.level === 5
               }" class="px-2.5 py-0.5 rounded text-[10px] font-bold">
-                {{ p.level === 0 ? '👑 Owner' : 'Level ' + p.level }}
+                {{ p.level === 0 ? 'Owner' : 'Level ' + p.level }}
               </span>
             </td>
 
@@ -134,7 +137,11 @@
           <h3 class="text-base font-bold font-heading text-white">Add New Network Partner</h3>
           <p class="text-xs text-slate-400">Assign under an existing parent or directly under Platform Owner</p>
         </div>
-        <button (click)="closeAddModal()" class="text-slate-400 hover:text-white">✕</button>
+        <button (click)="closeAddModal()" class="p-1 rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Close modal">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <div *ngIf="addPartnerError" class="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">
@@ -148,14 +155,13 @@
         </div>
 
         <div>
-          <label class="block font-semibold text-slate-300 mb-1">Direct Parent / Upline Partner</label>
-          <select [(ngModel)]="newPartner.parentId" class="form-input">
-            <option value="">Platform Owner (Creates Level 1 Senior Partner)</option>
+          <label class="block font-semibold text-slate-300 mb-1">Direct Parent / Upline Partner *</label>
+          <select [(ngModel)]="newPartner.parentId" class="form-input text-xs">
             <option *ngFor="let parent of parentOptions" [value]="parent._id">
-              {{ parent.name }} ({{ parent.level === 0 ? '👑 Owner' : 'L' + parent.level }} - {{ parent.partnerId }})
+              {{ parent.name }} ({{ parent.level === 0 ? 'Platform Owner' : 'Level ' + parent.level }} - {{ parent.partnerId }}) → Creates Level {{ parent.level + 1 }} {{ getTargetRoleTitle(parent.level + 1) }}
             </option>
           </select>
-          <p class="text-[10px] text-slate-500 mt-1">If parent is selected, partner's level will automatically be Parent Level + 1.</p>
+          <p class="text-[10px] text-slate-500 mt-1">New partner's tier is automatically computed as Parent Tier + 1 (up to Level 5 max).</p>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
@@ -199,14 +205,18 @@
             'badge-l4': selectedPartnerDetail.partner.level === 4,
             'badge-l5': selectedPartnerDetail.partner.level === 5
           }" class="px-2.5 py-1 rounded-md font-bold text-xs">
-            {{ selectedPartnerDetail.partner.level === 0 ? '👑 OWNER' : 'LEVEL ' + selectedPartnerDetail.partner.level }}
+            {{ selectedPartnerDetail.partner.level === 0 ? 'OWNER' : 'LEVEL ' + selectedPartnerDetail.partner.level }}
           </span>
           <div>
             <h3 class="text-lg font-bold font-heading text-white">{{ selectedPartnerDetail.partner.name }}</h3>
             <p class="text-xs font-mono text-indigo-400">{{ selectedPartnerDetail.partner.partnerId }} • {{ selectedPartnerDetail.partner.roleTitle || 'Partner' }}</p>
           </div>
         </div>
-        <button (click)="closeDetailDrawer()" class="text-slate-400 hover:text-white">✕</button>
+        <button (click)="closeDetailDrawer()" class="p-1 rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Close details">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <!-- Upline Chain Section -->
@@ -232,7 +242,7 @@
                 'badge-l3': u.level === 3,
                 'badge-l4': u.level === 4
               }" class="px-2 py-0.5 rounded text-[10px] font-bold">
-                {{ u.level === 0 ? '👑 Owner' : 'L' + u.level }}
+                {{ u.level === 0 ? 'Owner' : 'L' + u.level }}
               </span>
               <span class="font-semibold text-white">{{ u.name }}</span>
               <span class="text-[10px] text-slate-500 font-mono">({{ u.partnerId }})</span>

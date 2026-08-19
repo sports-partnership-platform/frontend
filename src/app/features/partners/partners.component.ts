@@ -67,11 +67,12 @@ export class PartnersComponent implements OnInit {
   }
 
   openAddModal(): void {
+    const owner = this.partners.find(p => p.level === 0) || this.partners[0];
     this.newPartner = {
       name: '',
       email: '',
       phone: '',
-      parentId: '',
+      parentId: owner ? owner._id : '',
       status: 'Active'
     };
     this.addPartnerError = '';
@@ -117,8 +118,19 @@ export class PartnersComponent implements OnInit {
     this.selectedPartnerDetail = null;
   }
 
-  // Get potential parent options (Level 1 to Level 4)
+  // Get potential parent options (Level 0 Root Owner up to Level 4)
   get parentOptions(): Partner[] {
-    return this.partners.filter(p => p.level < 5);
+    return this.partners.filter(p => p.level >= 0 && p.level < 5);
+  }
+
+  getTargetRoleTitle(level: number): string {
+    switch (level) {
+      case 1: return '(Senior Partner)';
+      case 2: return '(Sub-Partner)';
+      case 3: return '(Master Agent)';
+      case 4: return '(Agent)';
+      case 5: return '(Sub-Agent)';
+      default: return '';
+    }
   }
 }

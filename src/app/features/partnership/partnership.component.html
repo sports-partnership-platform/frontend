@@ -46,7 +46,11 @@
             <!-- Partner -->
             <td class="py-3.5 px-4 font-semibold text-white">
               <div class="flex items-center gap-2">
-                <span *ngIf="row.level === 0" class="text-sm">👑</span>
+                <span *ngIf="row.level === 0" class="w-5 h-5 rounded bg-amber-500/20 border border-amber-500/40 inline-flex items-center justify-center text-amber-400">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                  </svg>
+                </span>
                 <div>
                   {{ row.name }}
                   <span class="text-[10px] text-slate-500 font-mono block">{{ row.partnerId }}</span>
@@ -64,7 +68,7 @@
                 'badge-l4': row.level === 4,
                 'badge-l5': row.level === 5
               }" class="px-2.5 py-0.5 rounded text-[10px] font-bold">
-                {{ row.level === 0 ? '👑 Owner' : 'Level ' + row.level }}
+                {{ row.level === 0 ? 'Owner' : 'Level ' + row.level }}
               </span>
             </td>
 
@@ -118,10 +122,14 @@
         <div>
           <h3 class="text-base font-bold font-heading text-white">Configure Partnership Allocation</h3>
           <p class="text-xs text-slate-400">
-            {{ editingPartner.name }} ({{ editingPartner.level === 0 ? '👑 Owner' : 'L' + editingPartner.level }}) • <span class="uppercase text-amber-400 font-bold font-mono">{{ editingSportCode }}</span>
+            {{ editingPartner.name }} ({{ editingPartner.level === 0 ? 'Owner' : 'L' + editingPartner.level }}) • <span class="uppercase text-amber-400 font-bold font-mono">{{ editingSportCode }}</span>
           </p>
         </div>
-        <button (click)="closeEditModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+        <button (click)="closeEditModal()" class="p-1 rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Close modal">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <div *ngIf="saveError" class="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">

@@ -84,10 +84,11 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  setScenario(partnerCode: string, sport: string, amount: number, note: string): void {
-    const partner = this.partners.find(p => p.partnerId === partnerCode);
-    if (partner) {
-      this.selectedPartnerId = partner._id;
+  setScenario(sport: string, amount: number, note: string): void {
+    if (this.partners.length > 0) {
+      if (!this.selectedPartnerId) {
+        this.selectedPartnerId = this.partners[0]._id;
+      }
       this.selectedSport = sport;
       this.amount = amount;
       this.note = note;

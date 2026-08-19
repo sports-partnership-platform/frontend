@@ -26,8 +26,10 @@
           <!-- Level 0 (Owner) Node Card -->
           <div (click)="selectNode(root)" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/70 via-[#131927] to-[#0d1322] border border-amber-500/50 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between shadow-lg shadow-amber-950/30">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center font-bold text-amber-300 text-sm shadow-inner">
-                👑
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shadow-inner">
+                <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                </svg>
               </div>
               <div>
                 <div class="flex items-center gap-2">
@@ -160,7 +162,11 @@
             <h3 class="text-lg font-bold font-heading text-white mt-1">{{ selectedNode.name }}</h3>
             <p class="text-xs font-mono text-indigo-400">{{ selectedNode.partnerId }}</p>
           </div>
-          <button (click)="closeNodeDetail()" class="text-slate-400 hover:text-white text-xs">✕</button>
+          <button (click)="closeNodeDetail()" class="p-1 rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Close details">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         <div class="space-y-3.5 text-xs">
