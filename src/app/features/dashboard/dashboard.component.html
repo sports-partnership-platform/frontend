@@ -2,15 +2,15 @@
   <!-- Header Title -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-      <h2 class="text-2xl font-bold font-heading text-white tracking-tight">Platform Command Center</h2>
-      <p class="text-xs text-slate-400">Multi-tier revenue waterfall cascading from Platform Owner down to Level 5 Sub-Agents</p>
+      <h2 class="text-2xl font-bold font-heading text-white tracking-tight">Platform Dashboard</h2>
+      <p class="text-sm text-slate-400 mt-1">Multi-tier commission distribution across all partner levels (Platform Owner down to Level 5)</p>
     </div>
     <div class="flex items-center gap-3">
-      <a routerLink="/transactions" class="btn-primary">
+      <a routerLink="/transactions" class="btn-primary text-sm px-4 py-2.5 font-semibold">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Simulate Payout
+        Calculate Commission
       </a>
     </div>
   </div>
@@ -26,10 +26,10 @@
       <!-- Card 1: Total Partners -->
       <div class="glass-panel p-6 glass-panel-hover flex items-center justify-between">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Partners</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Partners</p>
           <h3 class="text-3xl font-extrabold font-heading text-white mt-1">{{ stats?.summary?.totalPartners || 0 }}</h3>
-          <p class="text-xs text-emerald-400 mt-2 flex items-center gap-1 font-medium">
-            <span>{{ stats?.summary?.activePartners || 0 }} Active</span> Across Hierarchy
+          <p class="text-xs text-emerald-400 mt-2 flex items-center gap-1 font-semibold">
+            <span>{{ stats?.summary?.activePartners || 0 }} Active</span> Across Network
           </p>
         </div>
         <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shadow-sm">
@@ -42,9 +42,9 @@
       <!-- Card 2: Total Network Revenue -->
       <div class="glass-panel p-6 glass-panel-hover flex items-center justify-between">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Processed Volume</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Processed Volume</p>
           <h3 class="text-3xl font-extrabold font-heading text-white mt-1 tabular-nums">₹{{ (stats?.summary?.totalRevenue || 0) | number:'1.0-0' }}</h3>
-          <p class="text-xs text-indigo-400 mt-2 font-medium">Across {{ stats?.summary?.totalTransactions || 0 }} Settled TXs</p>
+          <p class="text-xs text-indigo-400 mt-2 font-semibold">Across {{ stats?.summary?.totalTransactions || 0 }} Completed Transactions</p>
         </div>
         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,9 +56,9 @@
       <!-- Card 3: Sports Enabled -->
       <div class="glass-panel p-6 glass-panel-hover flex items-center justify-between">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Configured Sports</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Sports</p>
           <h3 class="text-3xl font-extrabold font-heading text-white mt-1">{{ stats?.sportsRevenue?.length || 3 }}</h3>
-          <p class="text-xs text-amber-400 mt-2 font-medium">Cricket, Tennis, Football</p>
+          <p class="text-xs text-amber-400 mt-2 font-semibold">Cricket, Tennis, Football</p>
         </div>
         <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-sm">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,9 +70,9 @@
       <!-- Card 4: Max Hierarchy Depth -->
       <div class="glass-panel p-6 glass-panel-hover flex items-center justify-between">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Hierarchy Depth</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Hierarchy Depth</p>
           <h3 class="text-2xl font-extrabold font-heading text-white mt-1">Owner → L1 to L5</h3>
-          <p class="text-xs text-emerald-400 mt-2 font-medium">100% Zero-Sum Conserved</p>
+          <p class="text-xs text-emerald-400 mt-2 font-semibold">100% Fully Distributed</p>
         </div>
         <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-sm">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,115 +88,115 @@
       <div class="lg:col-span-2 space-y-8">
         <!-- Level Distribution Bar -->
         <div class="glass-panel p-6">
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-between mb-5">
             <div>
-              <h3 class="text-base font-bold font-heading text-white">Full Hierarchy Network (Starts From Owner)</h3>
-              <p class="text-xs text-slate-400">Commission flows from bottom sub-tiers through uplines up to Owner</p>
+              <h3 class="text-lg font-bold font-heading text-white">Partner Network by Level</h3>
+              <p class="text-sm text-slate-400 mt-0.5">Commission flows from child agents through uplines up to Platform Owner</p>
             </div>
-            <a routerLink="/hierarchy" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1">View Tree →</a>
+            <a routerLink="/hierarchy" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1">View Hierarchy →</a>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
             <!-- Owner -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-amber-500/40">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l0">OWNER (ROOT)</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L0 || 1 }}</p>
-              <p class="text-[10px] text-slate-400">Platform Head</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-amber-500/40">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l0">PLATFORM OWNER</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L0 ?? 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Platform Head</p>
             </div>
 
             <!-- L1 -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-amber-500/20">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l1">LEVEL 1</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L1 || 0 }}</p>
-              <p class="text-[10px] text-slate-400">Senior Partner</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-amber-500/20">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l1">LEVEL 1</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L1 || 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Senior Partner</p>
             </div>
 
             <!-- L2 -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-sky-500/20">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l2">LEVEL 2</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L2 || 0 }}</p>
-              <p class="text-[10px] text-slate-400">Sub-Partner</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-sky-500/20">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l2">LEVEL 2</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L2 || 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Sub-Partner</p>
             </div>
 
             <!-- L3 -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-emerald-500/20">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l3">LEVEL 3</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L3 || 0 }}</p>
-              <p class="text-[10px] text-slate-400">Master Agent</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-emerald-500/20">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l3">LEVEL 3</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L3 || 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Master Agent</p>
             </div>
 
             <!-- L4 -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-purple-500/20">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l4">LEVEL 4</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L4 || 0 }}</p>
-              <p class="text-[10px] text-slate-400">Agent</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-purple-500/20">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l4">LEVEL 4</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L4 || 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Agent</p>
             </div>
 
             <!-- L5 -->
-            <div class="p-3 rounded-xl bg-[#121826] border border-rose-500/20">
-              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded badge-l5">LEVEL 5</span>
-              <p class="text-xl font-black font-heading text-white mt-1.5">{{ stats?.levelsCount?.L5 || 0 }}</p>
-              <p class="text-[10px] text-slate-400">Sub-Agent</p>
+            <div class="p-3.5 rounded-xl bg-[#121826] border border-rose-500/20">
+              <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded badge-l5">LEVEL 5</span>
+              <p class="text-2xl font-black font-heading text-white mt-2">{{ stats?.levelsCount?.L5 || 0 }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">Sub-Agent</p>
             </div>
           </div>
         </div>
 
         <!-- Sample Sports Share Distribution Bar (Multi-Tier Turnover Split Visualized) -->
         <div class="glass-panel p-6">
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-between mb-5">
             <div>
-              <h3 class="text-base font-bold font-heading text-white">Revenue Split Visualizer (Level 3 Activity Example)</h3>
-              <p class="text-xs text-slate-400">100% total turnover split among Level 3, Level 2, Level 1, and Platform Owner</p>
+              <h3 class="text-lg font-bold font-heading text-white">Commission Split Visualizer (Level 3 Activity Example)</h3>
+              <p class="text-sm text-slate-400 mt-0.5">100% total turnover split among Level 3, Level 2, Level 1, and Platform Owner</p>
             </div>
             <a routerLink="/partnership" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">Configure Matrix →</a>
           </div>
 
-          <div class="space-y-5">
+          <div class="space-y-6">
             <!-- Cricket Bar -->
             <div>
-              <div class="flex justify-between text-xs font-semibold mb-1.5">
-                <span class="text-amber-400 flex items-center gap-1.5 font-heading">
+              <div class="flex justify-between text-sm font-semibold mb-2">
+                <span class="text-amber-400 flex items-center gap-2 font-heading">
                   <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Cricket (L3: 20% / L2: 30% / L1: 30% / Owner: 20%)
                 </span>
-                <span class="text-emerald-400 font-mono font-bold">100% Conserved</span>
+                <span class="text-emerald-400 font-mono font-bold text-xs">100% Fully Distributed</span>
               </div>
-              <div class="cake-bar-container">
-                <div class="cake-slice bg-emerald-600" style="width: 20%" title="Raj (L3): 20%">L3: 20%</div>
-                <div class="cake-slice bg-sky-600" style="width: 30%" title="Amit (L2): 30%">L2: 30%</div>
-                <div class="cake-slice bg-indigo-600" style="width: 30%" title="Rahul (L1): 30%">L1: 30%</div>
-                <div class="cake-slice bg-amber-600" style="width: 20%" title="Owner (L0): 20%">Owner: 20%</div>
+              <div class="cake-bar-container h-8">
+                <div class="cake-slice bg-emerald-600 font-mono text-xs font-bold" style="width: 20%" title="Raj (L3): 20%">L3: 20%</div>
+                <div class="cake-slice bg-sky-600 font-mono text-xs font-bold" style="width: 30%" title="Amit (L2): 30%">L2: 30%</div>
+                <div class="cake-slice bg-indigo-600 font-mono text-xs font-bold" style="width: 30%" title="Rahul (L1): 30%">L1: 30%</div>
+                <div class="cake-slice bg-amber-600 font-mono text-xs font-bold" style="width: 20%" title="Owner (L0): 20%">Owner: 20%</div>
               </div>
             </div>
 
             <!-- Tennis Bar -->
             <div>
-              <div class="flex justify-between text-xs font-semibold mb-1.5">
-                <span class="text-cyan-400 flex items-center gap-1.5 font-heading">
+              <div class="flex justify-between text-sm font-semibold mb-2">
+                <span class="text-cyan-400 flex items-center gap-2 font-heading">
                   <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Tennis (L3: 15% / L2: 40% / L1: 5% / Owner: 40%)
                 </span>
-                <span class="text-emerald-400 font-mono font-bold">100% Conserved</span>
+                <span class="text-emerald-400 font-mono font-bold text-xs">100% Fully Distributed</span>
               </div>
-              <div class="cake-bar-container">
-                <div class="cake-slice bg-emerald-600" style="width: 15%" title="Raj (L3): 15%">L3: 15%</div>
-                <div class="cake-slice bg-sky-600" style="width: 40%" title="Amit (L2): 40%">L2: 40%</div>
-                <div class="cake-slice bg-indigo-600" style="width: 5%" title="Rahul (L1): 5%">5%</div>
-                <div class="cake-slice bg-amber-600" style="width: 40%" title="Owner (L0): 40%">Owner: 40%</div>
+              <div class="cake-bar-container h-8">
+                <div class="cake-slice bg-emerald-600 font-mono text-xs font-bold" style="width: 15%" title="Raj (L3): 15%">L3: 15%</div>
+                <div class="cake-slice bg-sky-600 font-mono text-xs font-bold" style="width: 40%" title="Amit (L2): 40%">L2: 40%</div>
+                <div class="cake-slice bg-indigo-600 font-mono text-xs font-bold" style="width: 5%" title="Rahul (L1): 5%">5%</div>
+                <div class="cake-slice bg-amber-600 font-mono text-xs font-bold" style="width: 40%" title="Owner (L0): 40%">Owner: 40%</div>
               </div>
             </div>
 
             <!-- Football Bar -->
             <div>
-              <div class="flex justify-between text-xs font-semibold mb-1.5">
-                <span class="text-emerald-400 flex items-center gap-1.5 font-heading">
+              <div class="flex justify-between text-sm font-semibold mb-2">
+                <span class="text-emerald-400 flex items-center gap-2 font-heading">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Football (L3: 20% / L2: 40% / L1: 10% / Owner: 30%)
                 </span>
-                <span class="text-emerald-400 font-mono font-bold">100% Conserved</span>
+                <span class="text-emerald-400 font-mono font-bold text-xs">100% Fully Distributed</span>
               </div>
-              <div class="cake-bar-container">
-                <div class="cake-slice bg-emerald-600" style="width: 20%" title="Raj (L3): 20%">L3: 20%</div>
-                <div class="cake-slice bg-sky-600" style="width: 40%" title="Amit (L2): 40%">L2: 40%</div>
-                <div class="cake-slice bg-indigo-600" style="width: 10%" title="Rahul (L1): 10%">L1: 10%</div>
-                <div class="cake-slice bg-amber-600" style="width: 30%" title="Owner (L0): 30%">Owner: 30%</div>
+              <div class="cake-bar-container h-8">
+                <div class="cake-slice bg-emerald-600 font-mono text-xs font-bold" style="width: 20%" title="Raj (L3): 20%">L3: 20%</div>
+                <div class="cake-slice bg-sky-600 font-mono text-xs font-bold" style="width: 40%" title="Amit (L2): 40%">L2: 40%</div>
+                <div class="cake-slice bg-indigo-600 font-mono text-xs font-bold" style="width: 10%" title="Rahul (L1): 10%">L1: 10%</div>
+                <div class="cake-slice bg-amber-600 font-mono text-xs font-bold" style="width: 30%" title="Owner (L0): 30%">Owner: 30%</div>
               </div>
             </div>
           </div>
@@ -206,22 +206,22 @@
       <!-- Right 1 Col: Real-time Payout Calculator Widget -->
       <div class="glass-panel p-6 flex flex-col justify-between">
         <div>
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
             <div>
-              <h3 class="text-sm font-bold font-heading text-white">Live Waterfall Simulator</h3>
-              <p class="text-[11px] text-slate-400">Simulate uplines up to Owner</p>
+              <h3 class="text-base font-bold font-heading text-white">Commission Calculator Simulator</h3>
+              <p class="text-xs text-slate-400">Simulate upline commission shares up to Platform Owner</p>
             </div>
           </div>
 
           <div class="space-y-3.5">
             <div>
-              <label class="block text-[11px] font-semibold text-slate-300 mb-1">Generating Partner</label>
-              <select [(ngModel)]="calcPartnerId" (change)="runQuickCalculator()" class="form-input text-xs">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Originating Partner</label>
+              <select [(ngModel)]="calcPartnerId" (change)="runQuickCalculator()" class="form-input text-xs py-1.5">
                 <option *ngFor="let p of partnersList" [value]="p._id">
                   {{ p.name }} ({{ p.level === 0 ? 'Owner' : 'L' + p.level }} - {{ p.partnerId }})
                 </option>
@@ -230,8 +230,8 @@
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Sport</label>
-                <select [(ngModel)]="calcSport" (change)="runQuickCalculator()" class="form-input text-xs uppercase">
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Sport</label>
+                <select [(ngModel)]="calcSport" (change)="runQuickCalculator()" class="form-input text-xs uppercase py-1.5">
                   <option value="cricket">Cricket</option>
                   <option value="tennis">Tennis</option>
                   <option value="football">Football</option>
@@ -239,15 +239,15 @@
               </div>
 
               <div>
-                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Amount (₹)</label>
-                <input type="number" [(ngModel)]="calcAmount" (input)="runQuickCalculator()" class="form-input text-xs font-mono font-bold" placeholder="10000" />
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Transaction Amount (₹)</label>
+                <input type="number" [(ngModel)]="calcAmount" (input)="runQuickCalculator()" class="form-input text-xs font-mono font-bold py-1.5" placeholder="10000" />
               </div>
             </div>
 
             <!-- Calculated Breakdown Box -->
             <div *ngIf="calcResult" class="mt-3 p-3.5 rounded-xl bg-[#0b101c] border border-white/[0.08] space-y-2.5">
               <div class="flex justify-between items-center border-b border-white/[0.08] pb-2">
-                <span class="text-[11px] font-semibold text-slate-400">Waterfall Payout</span>
+                <span class="text-xs font-semibold text-slate-300">Total Commission Distributed</span>
                 <span class="text-xs font-bold font-mono text-emerald-400">₹{{ calcResult.amount | number }} (100%)</span>
               </div>
 
@@ -261,14 +261,14 @@
                       'badge-l3': b.level === 3,
                       'badge-l4': b.level === 4,
                       'badge-l5': b.level === 5
-                    }" class="px-1.5 py-0.5 rounded text-[9px] font-bold">
+                    }" class="px-2 py-0.5 rounded text-xs font-bold">
                       {{ b.level === 0 ? 'OWNER' : 'L' + b.level }}
                     </span>
-                    <span class="text-slate-200 font-medium text-[11px]">{{ b.partnerName }}</span>
+                    <span class="text-slate-200 font-semibold text-xs">{{ b.partnerName }}</span>
                   </div>
                   <div class="text-right">
-                    <span class="text-slate-400 mr-1.5 text-[10px] font-mono">{{ b.percentage }}%</span>
-                    <span class="font-bold text-emerald-400 font-mono text-xs">₹{{ b.amount | number }}</span>
+                    <span class="text-slate-400 mr-1.5 text-xs font-mono">{{ b.percentage }}%</span>
+                    <span class="font-bold text-emerald-400 font-mono text-sm">₹{{ b.amount | number }}</span>
                   </div>
                 </div>
               </div>
@@ -288,8 +288,8 @@
     <div class="glass-panel p-6">
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h3 class="text-base font-bold font-heading text-white">Recent Transactions Ledger</h3>
-          <p class="text-xs text-slate-400">Verified multi-tier revenue distribution audit</p>
+          <h3 class="text-lg font-bold font-heading text-white">Recent Transactions</h3>
+          <p class="text-sm text-slate-400 mt-0.5">Audit log of commission distributions across all partner tiers</p>
         </div>
         <a routerLink="/transactions" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">View All →</a>
       </div>
@@ -297,29 +297,29 @@
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-white/[0.08] pb-3">
-              <th class="pb-3 px-4">TX ID</th>
-              <th class="pb-3 px-4">Generating Partner</th>
-              <th class="pb-3 px-4">Sport</th>
-              <th class="pb-3 px-4">Total Turnover</th>
-              <th class="pb-3 px-4">Waterfall Breakdown (Up to Owner)</th>
-              <th class="pb-3 px-4 text-right">Date</th>
+            <tr class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-white/[0.08] pb-4">
+              <th class="pb-3.5 px-4 text-xs font-bold">Transaction ID</th>
+              <th class="pb-3.5 px-4 text-xs font-bold">Originating Partner</th>
+              <th class="pb-3.5 px-4 text-xs font-bold">Sport</th>
+              <th class="pb-3.5 px-4 text-xs font-bold">Transaction Amount</th>
+              <th class="pb-3.5 px-4 text-xs font-bold">Commission Breakdown (Upline to Owner)</th>
+              <th class="pb-3.5 px-4 text-right text-xs font-bold">Date</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/[0.06] text-xs">
+          <tbody class="divide-y divide-white/[0.06] text-sm">
             <tr *ngIf="!stats?.recentTransactions?.length">
-              <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
-                No transactions recorded yet. Settle transactions from the Transactions & Calc tab to see live ledger activity.
+              <td colspan="6" class="py-8 text-center text-slate-400 text-sm">
+                No transactions recorded yet. Process transactions from the Transactions & Calculator tab to see live ledger activity.
               </td>
             </tr>
-            <tr *ngFor="let tx of stats?.recentTransactions" class="hover:bg-white/[0.02] transition-colors">
-              <td class="py-3 px-4 font-mono font-bold text-indigo-400">{{ tx.transactionId }}</td>
-              <td class="py-3 px-4 font-medium text-slate-200">
+            <tr *ngFor="let tx of stats?.recentTransactions" class="hover:bg-white/[0.03] transition-colors">
+              <td class="py-3.5 px-4 font-mono font-bold text-indigo-400 text-sm">{{ tx.transactionId }}</td>
+              <td class="py-3.5 px-4 font-bold text-white text-sm">
                 {{ tx.partnerName }}
-                <span class="ml-1 text-[10px] text-slate-400">({{ tx.partnerLevel === 0 ? 'Owner' : 'L' + tx.partnerLevel }})</span>
+                <span class="ml-1 text-xs text-slate-400 font-normal">({{ tx.partnerLevel === 0 ? 'Owner' : 'L' + tx.partnerLevel }})</span>
               </td>
-              <td class="py-3 px-4">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider" [ngClass]="{
+              <td class="py-3.5 px-4">
+                <span class="px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider" [ngClass]="{
                   'bg-amber-500/10 text-amber-400 border border-amber-500/30': tx.sport === 'cricket',
                   'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30': tx.sport === 'tennis',
                   'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30': tx.sport === 'football'
@@ -327,15 +327,15 @@
                   {{ tx.sportName || tx.sport }}
                 </span>
               </td>
-              <td class="py-3 px-4 font-extrabold text-white font-mono tabular-nums">₹{{ tx.amount | number }}</td>
-              <td class="py-3 px-4">
+              <td class="py-3.5 px-4 font-extrabold text-emerald-400 font-mono tabular-nums text-base">₹{{ tx.amount | number }}</td>
+              <td class="py-3.5 px-4">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                  <span *ngFor="let item of tx.breakdown" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#0b101c] border border-white/10 text-slate-300 font-mono">
+                  <span *ngFor="let item of tx.breakdown" class="text-xs font-semibold px-2 py-0.5 rounded bg-[#0b101c] border border-white/10 text-slate-300 font-mono">
                     {{ item.level === 0 ? 'Owner' : 'L' + item.level }}: ₹{{ item.amount | number }}
                   </span>
                 </div>
               </td>
-              <td class="py-3 px-4 text-right text-slate-400 text-[11px]">
+              <td class="py-3.5 px-4 text-right text-slate-400 text-xs">
                 {{ tx.createdAt | date:'short' }}
               </td>
             </tr>

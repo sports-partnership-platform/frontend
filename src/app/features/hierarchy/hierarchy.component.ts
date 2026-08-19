@@ -110,7 +110,7 @@ export class HierarchyComponent implements OnInit {
   }
 
   getRoleLabel(node: any): string {
-    if (node.level === 0) return 'PLATFORM ROOT OWNER';
+    if (node.level === 0) return 'PLATFORM OWNER';
     if (node.roleTitle) return `Level ${node.level} (${node.roleTitle})`;
     const roles: Record<number, string> = {
       1: 'Level 1 (Senior Partner)',

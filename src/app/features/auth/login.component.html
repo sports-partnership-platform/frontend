@@ -14,7 +14,7 @@
       </div> -->
       <div>
         <h1 class="text-2xl font-black font-heading tracking-tight text-white">SPORTS PARTNERSHIP</h1>
-        <p class="text-xs font-medium text-slate-400 mt-1">Multi-Tier Hierarchy & Commission Settlement Portal</p>
+        <p class="text-xs font-medium text-slate-400 mt-1">Multi-Tier Commission & Settlement Portal</p>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
           </svg>
           Account Sign In
         </h2>
-        <p class="text-xs text-slate-400 mt-0.5">Enter your network partner credentials to access your portal</p>
+        <p class="text-xs text-slate-400 mt-0.5">Enter your partner account credentials to access your portal</p>
       </div>
 
       <!-- Error Alert -->
@@ -51,7 +51,7 @@
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            <input type="text" [(ngModel)]="username" name="username" placeholder="e.g. admin or rahul" required
+            <input type="text" [(ngModel)]="username" name="username" placeholder="e.g. admin or rahul_l1" required
               class="form-input pl-10 text-xs font-mono" />
           </div>
         </div>
@@ -91,10 +91,10 @@
           class="btn-primary w-full justify-center py-3 text-xs font-bold tracking-wide mt-2">
           <span *ngIf="loading" class="flex items-center gap-2">
             <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            <span>Authenticating...</span>
+            <span>Signing In...</span>
           </span>
           <span *ngIf="!loading" class="flex items-center gap-2">
-            <span>Access Network Portal</span>
+            <span>Sign In to Portal</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
@@ -117,13 +117,13 @@
             class="p-2.5 rounded-lg bg-[#121929] border border-amber-500/30 hover:border-amber-500/60 transition-all text-left flex items-center justify-between group">
             <div class="flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span class="font-bold text-white text-xs">Platform Owner (Root)</span>
+              <span class="font-bold text-white text-xs">Platform Owner</span>
             </div>
             <span class="font-mono text-[11px] text-amber-300 group-hover:text-amber-200">admin / admin123</span>
           </button>
         </div>
-        <p class="text-[10px] text-slate-500 text-center">Once downline partners are onboarded, you can log in using
-          their created usernames.</p>
+        <p class="text-[10px] text-slate-500 text-center">Once downline partners are added, you can log in using
+          their created credentials.</p>
       </div>
     </div>
   </div>

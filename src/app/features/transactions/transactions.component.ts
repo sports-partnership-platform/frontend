@@ -137,8 +137,8 @@ export class TransactionsComponent implements OnInit {
         this.submitting = false;
         if (res.success) {
           this.toastService.success(
-            'Transaction Settled',
-            `Transaction ${res.data.transactionId} for ₹${this.amount.toLocaleString()} successfully distributed up to Owner`
+            'Transaction Processed',
+            `Transaction ${res.data.transactionId} for ₹${this.amount.toLocaleString()} successfully processed and distributed`
           );
           this.note = '';
           this.loadTransactions();

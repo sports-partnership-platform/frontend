@@ -26,7 +26,7 @@ export class ReportsComponent implements OnInit {
     this.apiService.getEarningsReport().subscribe({
       next: (res) => {
         if (res.success) {
-          this.partnerEarnings = res.data;
+          this.partnerEarnings = Array.isArray(res.data) ? res.data : (res.data?.partnerEarnings || []);
           this.calculateSummaries();
         }
         this.loading = false;
@@ -45,7 +45,7 @@ export class ReportsComponent implements OnInit {
     this.partnerEarnings.forEach(p => {
       const levelKey = `L${p.level}`;
       if (this.levelEarnings[levelKey] !== undefined) {
-        this.levelEarnings[levelKey] += p.totalEarnings;
+        this.levelEarnings[levelKey] += (p.totalEarnings || 0);
       }
 
       if (p.sportsBreakdown) {
@@ -53,9 +53,11 @@ export class ReportsComponent implements OnInit {
           if (!this.sportEarnings[sportKey]) {
             this.sportEarnings[sportKey] = 0;
           }
-          this.sportEarnings[sportKey] += p.sportsBreakdown[sportKey];
+          this.sportEarnings[sportKey] += (p.sportsBreakdown[sportKey] || 0);
         });
       }
     });
   }
 }
+
+

@@ -37,8 +37,8 @@ export class PartnersComponent implements OnInit {
 
   // Created / Reset Credentials Confirmation Modal
   showCredentialsModal = false;
-  credentialsModalTitle = 'Partner Onboarded Successfully';
-  credentialsModalSubtitle = 'Portal access has been provisioned';
+  credentialsModalTitle = 'Partner Account Created Successfully';
+  credentialsModalSubtitle = 'Login credentials are ready to share';
   copied = false;
   resettingPartnerId: string | null = null;
   createdCredentials: {
@@ -92,7 +92,7 @@ export class PartnersComponent implements OnInit {
 
   openAddModal(): void {
     if (!this.authService.canCreateDownlines()) {
-      this.toastService.error('Hierarchy Cap', 'Level 5 Sub-Agents cannot create further downline partners');
+      this.toastService.error('Hierarchy Limit', 'Level 5 Sub-Agents cannot create further downline partners');
       return;
     }
 
@@ -159,8 +159,8 @@ export class PartnersComponent implements OnInit {
           this.loadPartners();
 
           // Show Credentials confirmation modal
-          this.credentialsModalTitle = 'Partner Onboarded Successfully';
-          this.credentialsModalSubtitle = 'Portal access has been provisioned';
+          this.credentialsModalTitle = 'Partner Account Created Successfully';
+          this.credentialsModalSubtitle = 'Login credentials are ready to share';
           this.copied = false;
           this.createdCredentials = {
             partnerName: res.data.name,
@@ -173,8 +173,8 @@ export class PartnersComponent implements OnInit {
           this.showCredentialsModal = true;
 
           this.toastService.success(
-            'Partner Onboarded',
-            `${res.data.name} provisioned as ${res.data.roleTitle} (${res.data.partnerId})`
+            'Partner Created',
+            `${res.data.name} created as ${res.data.roleTitle} (${res.data.partnerId})`
           );
         }
       },
@@ -195,8 +195,8 @@ export class PartnersComponent implements OnInit {
       next: (res: any) => {
         this.resettingPartnerId = null;
         if (res.success) {
-          this.credentialsModalTitle = 'Credentials Reset Successfully';
-          this.credentialsModalSubtitle = 'A new temporary password has been generated';
+          this.credentialsModalTitle = 'Password Reset Successfully';
+          this.credentialsModalSubtitle = 'New temporary login credentials have been generated';
           this.copied = false;
           this.createdCredentials = {
             partnerName: res.credentials.partnerName,
