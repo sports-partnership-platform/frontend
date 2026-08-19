@@ -45,7 +45,7 @@
         <div>
           <label class="block font-semibold text-slate-300 mb-1">Generating Partner *</label>
           <select [(ngModel)]="selectedPartnerId" (change)="calculate()" class="form-input text-xs">
-            <option *for="let p of partners" [value]="p._id">
+            <option *ngFor="let p of partners" [value]="p._id">
               {{ p.name }} ({{ p.level === 0 ? '👑 Owner' : 'L' + p.level }} - {{ p.partnerId }})
             </option>
           </select>
@@ -54,7 +54,7 @@
         <div>
           <label class="block font-semibold text-slate-300 mb-1">Sport *</label>
           <select [(ngModel)]="selectedSport" (change)="calculate()" class="form-input text-xs uppercase font-semibold">
-            <option *for="let s of sports" [value]="s.code">{{ s.name }}</option>
+            <option *ngFor="let s of sports" [value]="s.code">{{ s.name }}</option>
           </select>
         </div>
 

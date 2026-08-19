@@ -222,7 +222,7 @@
             <div>
               <label class="block text-[11px] font-semibold text-slate-300 mb-1">Generating Partner</label>
               <select [(ngModel)]="calcPartnerId" (change)="runQuickCalculator()" class="form-input text-xs">
-                <option *for="let p of partnersList" [value]="p._id">
+                <option *ngFor="let p of partnersList" [value]="p._id">
                   {{ p.name }} ({{ p.level === 0 ? 'Owner' : 'L' + p.level }} - {{ p.partnerId }})
                 </option>
               </select>

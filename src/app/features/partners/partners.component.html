@@ -151,7 +151,7 @@
           <label class="block font-semibold text-slate-300 mb-1">Direct Parent / Upline Partner</label>
           <select [(ngModel)]="newPartner.parentId" class="form-input">
             <option value="">Platform Owner (Creates Level 1 Senior Partner)</option>
-            <option *for="let parent of parentOptions" [value]="parent._id">
+            <option *ngFor="let parent of parentOptions" [value]="parent._id">
               {{ parent.name }} ({{ parent.level === 0 ? '👑 Owner' : 'L' + parent.level }} - {{ parent.partnerId }})
             </option>
           </select>
